@@ -1,3 +1,5 @@
+package biblioteca;
+
 public class Usuario {
     protected String nombre;
     protected String apellido;
@@ -44,7 +46,7 @@ public class Usuario {
     }
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "Biblioteca.Usuario{" +
                 "nombre='" + nombre + '\'' +
                 "apellido='" + apellido + '\'' +
                 ", mail='" + mail + '\'' +
