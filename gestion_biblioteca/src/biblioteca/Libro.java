@@ -25,12 +25,11 @@ public class Libro extends RecursoDigital {
     }
     @Override
     public String toString() {
-        return "Libro{" +
-                "titulo='" + getTitulo() + '\'' +
-                ", id=" + getId() +
-                ", editorial='" + editorial + '\'' +
-                ", autor='" + autor + '\'' +
-                ", año=" + ano +
-                '}';
+        return super.toString() + " | Editorial: " + editorial + " | Autor: " + autor + " | Ano: " + ano;
+    }
+
+    @Override
+    public void mostrarInformacion() {
+        System.out.println(this.toString());
     }
 }

@@ -15,5 +15,8 @@ public class Revista extends RecursoDigital{
     public String toString() {
         return super.toString() + " | Nº edición: " + numeroEdicion;
     }
-
+    @Override
+    public void mostrarInformacion() {
+        System.out.println(this.toString());
+    }
 }
