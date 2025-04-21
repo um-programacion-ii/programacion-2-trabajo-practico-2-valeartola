@@ -23,4 +23,14 @@ public class Libro extends RecursoDigital {
     public int getAno() {
         return ano;
     }
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "titulo='" + getTitulo() + '\'' +
+                ", id=" + getId() +
+                ", editorial='" + editorial + '\'' +
+                ", autor='" + autor + '\'' +
+                ", año=" + ano +
+                '}';
+    }
 }
