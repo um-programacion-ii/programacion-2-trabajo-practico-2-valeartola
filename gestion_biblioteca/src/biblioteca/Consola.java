@@ -9,9 +9,16 @@ public class Consola {
     }
 
     public void mostrarMenu() {
-        System.out.println("biblioteca");
-        System.out.println("1. Gestionar usuarios");
-        System.out.println("2. Gestionar recurso");
-        System.out.println("3. Salir");
+        System.out.println("===Biblioteca===");
+        System.out.println("1. Crear usuarios");
+        System.out.println("2. Crear libro");
+        System.out.println("3. Crear revista");
+        System.out.println("4. Crear audiolibro");
+        System.out.println("5. Crear podcast");
+        System.out.println("6. Salir");
+    }
+    public int pedirOpcion() {
+        System.out.print("Ingrese una opción: ");
+        return scanner.nextInt();
     }
 }

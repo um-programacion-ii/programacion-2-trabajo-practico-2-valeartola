@@ -1,17 +1,29 @@
 package biblioteca;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Audiolibro podcast = new Audiolibro("Vida de millonarios", 1, "LaCruda");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        System.out.println("Título: " + podcast.getTitulo());
+        System.out.println("Canal: " + podcast.getCanal());
+
+
+        Consola consola = new Consola();
+
+        consola.mostrarMenu();
+
+        int opcion = 2;
+
+        if (opcion == 2) {
+
+            System.out.println("Se eligio la opcion: 2.Crear libro");
+
+            Libro libro = new Libro("Antes de que se enfrie el café", 1, "Penguin", "Toshikazu Kawaguchi", 2020);
+
+            System.out.println("Libro creado:");
+            System.out.println(libro);
+        } else {
+            System.out.println("Opción no implementada todavía.");
         }
     }
 }
