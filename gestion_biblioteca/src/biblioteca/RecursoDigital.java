@@ -25,4 +25,13 @@ public abstract class RecursoDigital {
     public void setId(int id) {
         this.id = id;
     }
+    @Override
+    public String toString() {
+        return "Título: " + titulo + " | ID: " + id;
+    }
+
+    public void mostrarInformacion() {
+        System.out.println(this.toString());
+    }
+
 }
