@@ -21,7 +21,7 @@ public class Main {
             Libro libro = new Libro("Antes de que se enfrie el café", 1, "Penguin", "Toshikazu Kawaguchi", 2020);
 
             System.out.println("Libro creado:");
-            System.out.println(libro);
+            libro.mostrarInformacion();
         } else {
             System.out.println("Opción no implementada todavía.");
         }
