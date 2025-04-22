@@ -8,13 +8,13 @@ public class Main {
         Consola consola = new Consola();
         ServicioNotificaciones mail = new ServicioNotificacionesEmail();
         ServicioNotificaciones sms = new ServicioNotificacionesSMS();
-        Categoria novela = new Categoria("NOVELA");
-        Categoria historia = new Categoria("HISTORIA");
-        Categoria romance = new Categoria("ROMANCE");
-        Categoria ciencia = new Categoria("CIENCIA");
-        Categoria interes = new Categoria("INTERES");
-        Categoria ficcion = new Categoria("FICCION");
-
+        Categoria tecnologia = Categoria.TECNOLOGIA;
+        Categoria novela = Categoria.NOVELA;
+        Categoria historia = Categoria.HISTORIA;
+        Categoria romance = Categoria.ROMANCE;
+        Categoria ciencia = Categoria.CIENCIA;
+        Categoria interes = Categoria.INTERES;
+        Categoria ficcion = Categoria.FICCION;
         consola.mostrarMenu();
 
         int opcion = 2;
@@ -23,7 +23,7 @@ public class Main {
 
             System.out.println("Se eligio la opcion: 2.Crear libro");
 
-            Libro libro1 = new Libro("Antes de que se enfrie el cafe", 1, "Penguin", "Toshikazu Kawaguchi", 2020, mail, novela);
+            Libro libro1 = new Libro("Antes de que se enfrie el cafe", 1, "Penguin", "Toshikazu Kawaguchi", 2020, mail, Categoria.INTERES);
             libro1.prestar();
 
 
@@ -35,9 +35,9 @@ public class Main {
         }
 
 
-        RecursoDigital libro2 = new Libro("Nosotros en la luna", 2, "Planeta", "Alice Kellen", 2024, sms, romance);
-        RecursoDigital revista = new Revista("Caras", 2, 30, sms, interes);
-        RecursoDigital audiolibro1 = new Audiolibro("Dakota", 4, "Mercedes S.", sms, ficcion);
+        RecursoDigital libro2 = new Libro("Nosotros en la luna", 2, "Planeta", "Alice Kellen", 2024, sms, Categoria.ROMANCE);
+        RecursoDigital revista = new Revista("Caras", 2, 30, sms, Categoria.INTERES);
+        RecursoDigital audiolibro1 = new Audiolibro("Dakota", 4, "Mercedes S.", sms, Categoria.FICCION);
 
         System.out.println("=== Probar comportamiento consistente (LSP) ===");
         libro2.mostrarInformacion();
@@ -53,7 +53,7 @@ public class Main {
         Usuario usuario1 = new Usuario("Valentina", "Artola", "valeart@mail.com", 48965782);
         gestorBiblioteca.agregarUsuario(usuario1);
 
-        Libro libro3  = new Libro("El Principito", 101, "Editorial Salamandra", "Antoine", 1943, mail, ficcion);
+        Libro libro3  = new Libro("El Principito", 101, "Editorial Salamandra", "Antoine", 1943, mail, Categoria.FICCION);
         gestorBiblioteca.agregarRecurso(libro2);
         gestorBiblioteca.agregarRecurso(libro3);
         gestorBiblioteca.agregarRecurso(revista);
@@ -61,8 +61,8 @@ public class Main {
 
 
 
-        RecursoDigital encontrado = gestorBiblioteca.buscarRecursoPorTitulo("Java en Acción");
-        RecursoDigital encontradoRev = gestorBiblioteca.buscarRecursoPorTitulo("Ciencia Hoy");
+        RecursoDigital encontrado = gestorBiblioteca.buscarRecursoPorTitulo("El Principito");
+        RecursoDigital encontradoRev = gestorBiblioteca.buscarRecursoPorTitulo("Nosotros en la luna");
 
         //Le digo que muestre la informacion si lo encuentra (DEL LIBRO)
         if(encontrado != null){
@@ -86,7 +86,10 @@ public class Main {
         for (RecursoDigital r : filtroCategoria) {
             r.mostrarInformacion();
         }
+
+        consola.mostrarMenuOrdenamiento(gestorBiblioteca);
+
     }
 
-    
+
 }
