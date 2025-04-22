@@ -13,23 +13,26 @@ public class Main {
 
             System.out.println("Se eligio la opcion: 2.Crear libro");
 
-            Libro libro = new Libro("Antes de que se enfrie el cafe", 1, "Penguin", "Toshikazu Kawaguchi", 2020);
+            Libro libro1 = new Libro("Antes de que se enfrie el cafe", 1, "Penguin", "Toshikazu Kawaguchi", 2020);
 
             System.out.println("Libro creado:");
             //Compruebo que sirva mostrarinformacion() de clase base
-            libro.mostrarInformacion();
+            libro1.mostrarInformacion();
         } else {
             System.out.println("Opción no implementada todavía.");
         }
 
-        RecursoDigital libro = new Libro("Nosotros en la luna", 2, "Planeta", "Alice Kellen", 2024);
+        RecursoDigital libro2 = new Libro("Nosotros en la luna", 2, "Planeta", "Alice Kellen", 2024);
         RecursoDigital revista = new Revista("Caras", 2, 30);
-        RecursoDigital audiolibro = new Audiolibro("Dakota", 4, "Mercedes S.");
+        RecursoDigital audiolibro1 = new Audiolibro("Dakota", 4, "Mercedes S.");
 
         System.out.println("=== Probar comportamiento consistente (LSP) ===");
-        libro.mostrarInformacion();
+        libro2.mostrarInformacion();
         revista.mostrarInformacion();
-        audiolibro.mostrarInformacion();
+        audiolibro1.mostrarInformacion();
+
+        consola.mostrarMenuRecurso(libro2);
+        consola.mostrarMenuRecurso(audiolibro1);
 
     }
 }

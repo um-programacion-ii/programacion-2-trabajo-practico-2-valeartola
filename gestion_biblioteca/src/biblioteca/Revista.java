@@ -1,6 +1,6 @@
 package biblioteca;
 
-public class Revista extends RecursoDigital{
+public class Revista extends RecursoDigital implements Prestable, Renovable{
     private int numeroEdicion;
 
     public Revista(String titulo, int id, int numeroEdicion) {
@@ -18,5 +18,24 @@ public class Revista extends RecursoDigital{
     @Override
     public void mostrarInformacion() {
         System.out.println(this.toString());
+    }
+    @Override
+    public boolean estaDisponible() {
+        return true;
+    }
+
+    @Override
+    public void prestar() {
+        System.out.println("Revista prestado.");
+    }
+
+    @Override
+    public void devolver() {
+        System.out.println("Revista devuelto.");
+    }
+
+    @Override
+    public void renovar() {
+        System.out.println("Revista renovado.");
     }
 }

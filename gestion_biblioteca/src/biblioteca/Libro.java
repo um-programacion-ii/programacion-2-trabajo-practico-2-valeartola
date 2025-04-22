@@ -1,6 +1,6 @@
 package biblioteca;
 
-public class Libro extends RecursoDigital {
+public class Libro extends RecursoDigital implements Renovable, Prestable {
     private String editorial;
     private String autor;
     private int ano;
@@ -32,4 +32,25 @@ public class Libro extends RecursoDigital {
     public void mostrarInformacion() {
         System.out.println(this.toString());
     }
+
+    @Override
+    public boolean estaDisponible() {
+        return true;
+    }
+
+    @Override
+    public void prestar() {
+        System.out.println("Libro prestado.");
+    }
+
+    @Override
+    public void devolver() {
+        System.out.println("Libro devuelto.");
+    }
+
+    @Override
+    public void renovar() {
+        System.out.println("Libro renovado.");
+    }
+
 }
