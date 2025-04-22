@@ -35,21 +35,27 @@ public class Libro extends RecursoDigital implements Renovable, Prestable {
 
     @Override
     public boolean estaDisponible() {
-        return true;
+        return getEstado() == EstadoRecurso.DISPONIBLE;
     }
 
     @Override
     public void prestar() {
+        if (!estaDisponible()) {
+            throw new RecursoNoDisponibleException("No se puede prestar el LIBRO " + getTitulo() + " No disponible");
+        }
+
+        actualizarEstado(EstadoRecurso.PRESTADO);
+
         System.out.println("Libro prestado.");
-        servicioNotificaciones.enviarNotificaciones("Se presto el libro:" + getTitulo());
+        servicioNotificaciones.enviarNotificaciones("Se presto el libro: " + getTitulo());
 
     }
 
     @Override
     public void devolver() {
+        actualizarEstado(EstadoRecurso.DISPONIBLE);
         System.out.println("Libro devuelto.");
-        servicioNotificaciones.enviarNotificaciones("Se devolvio el libro:" + getTitulo());
-
+        servicioNotificaciones.enviarNotificaciones("Se devolvio el libro: " + getTitulo());
     }
 
     @Override

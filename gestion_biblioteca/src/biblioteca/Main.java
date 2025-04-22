@@ -89,6 +89,11 @@ public class Main {
         }
 
         consola.mostrarMenuOrdenamiento(gestorBiblioteca);
+        consola.buscarUsuarioPorId(gestorBiblioteca);
+        ((Prestable) libro3).prestar(); // presto el podcast
+
+        consola.prestarRecursos(libro3);
+
 
     }
 

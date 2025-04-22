@@ -31,8 +31,12 @@ public class GestorBiblioteca {
         return null;
     }
 
-    public Usuario buscarUsuarioPorId(String id) {
-        return usuarios.get(id);
+    public Usuario buscarUsuarioPorId(String id) throws UsuarioNoEncontradoException {
+        Usuario usuario = usuarios.get(String.valueOf(id));
+        if (usuario == null) {
+            throw new UsuarioNoEncontradoException("Usuario no encontrado");
+        }
+        return usuario;
     }
 
     public List<RecursoDigital> buscarPorTitulo(String titulo) {

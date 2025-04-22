@@ -5,6 +5,7 @@ public abstract class RecursoDigital implements RecursoDigitalInt{
     private int id;
     protected ServicioNotificaciones servicioNotificaciones;
     private CategoriaRecurso categoriaRecurso;
+    private EstadoRecurso estado = EstadoRecurso.DISPONIBLE;
 
 
     public RecursoDigital(String titulo,int id, ServicioNotificaciones servicioNotificaciones, CategoriaRecurso categoriaRecurso) {
@@ -31,10 +32,6 @@ public abstract class RecursoDigital implements RecursoDigitalInt{
         this.id = id;
     }
 
-    public CategoriaRecurso getCategoria() {
-        return categoriaRecurso;
-    }
-
     @Override
     public String toString() {
         return "Título: " + titulo + " | ID: " + id;
@@ -43,8 +40,23 @@ public abstract class RecursoDigital implements RecursoDigitalInt{
     public String getIdentificador(){
         return titulo;
     }
+
+    @Override
+    public EstadoRecurso getEstado() {
+        return estado;
+    }
+
+    @Override
+    public void actualizarEstado(EstadoRecurso nuevoEstado) {
+        this.estado = nuevoEstado;
+    }
+
     public void mostrarInformacion() {
         System.out.println(this.toString());
+    }
+
+    public CategoriaRecurso getCategoria() {
+        return categoriaRecurso;
     }
 
 }
