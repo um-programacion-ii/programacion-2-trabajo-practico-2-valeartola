@@ -15,6 +15,7 @@ public class Main {
             System.out.println("Se eligio la opcion: 2.Crear libro");
 
             Libro libro1 = new Libro("Antes de que se enfrie el cafe", 1, "Penguin", "Toshikazu Kawaguchi", 2020, mail);
+            libro1.prestar();
 
 
             System.out.println("Libro creado:");
@@ -23,6 +24,7 @@ public class Main {
         } else {
             System.out.println("Opción no implementada todavía.");
         }
+
 
         RecursoDigital libro2 = new Libro("Nosotros en la luna", 2, "Planeta", "Alice Kellen", 2024, sms);
         RecursoDigital revista = new Revista("Caras", 2, 30, sms);
@@ -35,6 +37,7 @@ public class Main {
 
         consola.mostrarMenuRecurso(libro2);
         consola.mostrarMenuRecurso(audiolibro1);
+
 
     }
 }
