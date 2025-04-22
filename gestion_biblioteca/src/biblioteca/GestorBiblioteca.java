@@ -50,7 +50,7 @@ public class GestorBiblioteca {
     }
     public List<RecursoDigital> filtrarPorCategoria(Categoria categoria) {
         return recursos.stream()
-                .filter(r -> r.getCategoria().equals(categoria))
+                .filter(r -> r.getCategoria() == categoria)
                 .toList();
     }
 }
