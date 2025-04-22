@@ -21,18 +21,25 @@ public class Audiolibro extends RecursoDigital implements Prestable{
     }
     @Override
     public boolean estaDisponible() {
-        return true;
+        return getEstado() == EstadoRecurso.DISPONIBLE;
     }
 
     @Override
     public void prestar() {
-        System.out.println("Audiolibro prestado.");
+        if (!estaDisponible()) {
+            throw new RecursoNoDisponibleException("No se puede prestar el AUDIO LIBRO " + getTitulo() + " No disponible");
+        }
+
+        actualizarEstado(EstadoRecurso.PRESTADO);
+
+        System.out.println("AudioLibro prestado.");
         servicioNotificaciones.enviarNotificaciones("Se presto el AudioLibro: " + getTitulo());
     }
 
     @Override
     public void devolver() {
-        System.out.println("Audiolibro devuelto.");
+        actualizarEstado(EstadoRecurso.DISPONIBLE);
+        System.out.println("AudioLibro devuelto.");
         servicioNotificaciones.enviarNotificaciones("Se devolvio el AudioLibro: " + getTitulo());
     }
 }
