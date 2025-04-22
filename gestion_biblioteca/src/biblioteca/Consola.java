@@ -70,5 +70,11 @@ public class Consola {
                 System.out.println("Opción inválida");
         }
     }
+    public void mostrarCategoriasDisponibles() {
+        System.out.println("=== Categorias Disponibles ===");
+        for (CategoriaRecurso categoriaRecurso : CategoriaRecurso.values()) {
+            System.out.println(categoriaRecurso.toString());
+        }
+    }
 
 }
