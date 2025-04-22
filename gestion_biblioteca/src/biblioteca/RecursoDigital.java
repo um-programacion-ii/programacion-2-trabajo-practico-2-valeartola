@@ -32,7 +32,10 @@ public abstract class RecursoDigital implements RecursoDigitalInt{
     public String toString() {
         return "Título: " + titulo + " | ID: " + id;
     }
-
+    @Override
+    public String getIdentificador(){
+        return titulo;
+    }
     public void mostrarInformacion() {
         System.out.println(this.toString());
     }
