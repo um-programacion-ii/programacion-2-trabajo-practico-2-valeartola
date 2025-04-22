@@ -90,10 +90,15 @@ public class Main {
 
         consola.mostrarMenuOrdenamiento(gestorBiblioteca);
         consola.buscarUsuarioPorId(gestorBiblioteca);
-        ((Prestable) libro3).prestar(); // presto el podcast
+        ((Prestable) libro3).prestar(); //
 
         consola.prestarRecursos(libro3);
 
+        System.out.println("---Pruebas servicioPrestamo---");
+
+        ServicioPrestamos servicioPrestamos = new ServicioPrestamos(gestorBiblioteca);
+        servicioPrestamos.prestar(libro2, usuario1);
+        servicioPrestamos.devolver(libro2);
 
     }
 
