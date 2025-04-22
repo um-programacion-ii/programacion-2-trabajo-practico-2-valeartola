@@ -3,10 +3,13 @@ package biblioteca;
 public abstract class RecursoDigital {
     private String titulo;
     private int id;
+    protected ServicioNotificaciones servicioNotificaciones;
 
-    public RecursoDigital(String titulo,int id) {
+
+    public RecursoDigital(String titulo,int id, ServicioNotificaciones servicioNotificaciones) {
         this.titulo = titulo;
         this.id = id;
+        this.servicioNotificaciones = servicioNotificaciones;
 
     }
 

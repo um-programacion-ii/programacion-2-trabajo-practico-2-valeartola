@@ -5,8 +5,8 @@ public class Libro extends RecursoDigital implements Renovable, Prestable {
     private String autor;
     private int ano;
 
-    public Libro(String titulo, int id, String editorial, String autor, int ano) {
-        super(titulo, id);
+    public Libro(String titulo, int id, String editorial, String autor, int ano, ServicioNotificaciones servicioNotificaciones) {
+        super(titulo, id, servicioNotificaciones);
         this.editorial = editorial;
         this.autor = autor;
         this.ano = ano;
@@ -41,16 +41,22 @@ public class Libro extends RecursoDigital implements Renovable, Prestable {
     @Override
     public void prestar() {
         System.out.println("Libro prestado.");
+        servicioNotificaciones.enviarNotificaciones("Se presto el libro:" + getTitulo());
+
     }
 
     @Override
     public void devolver() {
         System.out.println("Libro devuelto.");
+        servicioNotificaciones.enviarNotificaciones("Se devolvio el libro:" + getTitulo());
+
     }
 
     @Override
     public void renovar() {
         System.out.println("Libro renovado.");
+        servicioNotificaciones.enviarNotificaciones("Se renovo el libro:" + getTitulo());
+
     }
 
 }
