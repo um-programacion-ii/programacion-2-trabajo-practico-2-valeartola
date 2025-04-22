@@ -5,12 +5,14 @@ public class Usuario {
     protected String apellido;
     protected String mail;
     protected int ID;
+    private String telefono;
 
-    public Usuario(String nombre, String apellido, String mail, int dni) {
+    public Usuario(String nombre, String apellido, String mail, int dni, String telefono) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.ID = dni;
+        this.telefono = telefono;
     }
 
     public String getNombre() {
@@ -44,6 +46,15 @@ public class Usuario {
     public void setID(int ID) {
         this.ID = ID;
     }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
     @Override
     public String toString() {
         return "Biblioteca.Usuario{" +
