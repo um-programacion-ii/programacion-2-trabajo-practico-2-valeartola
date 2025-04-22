@@ -1,5 +1,5 @@
 package biblioteca;
 
 public interface Renovable {
-    void renovar();
+    void renovar(Usuario usuario);
 }
