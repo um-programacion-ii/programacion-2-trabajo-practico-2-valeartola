@@ -1,6 +1,7 @@
 package biblioteca;
 
 import java.util.List;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
@@ -101,6 +102,16 @@ public class Main {
         servicioPrestamos.devolver(libro2);
 
         consola.mostrarMenuPrestamos(gestorBiblioteca, servicioPrestamos);
+
+        System.out.println("---Pruebas servicioReserva---");
+
+        ServicioReserva servicioReserva = new ServicioReserva();
+
+        Reserva reserva1 = new Reserva(usuario1, audiolibro1);
+
+        servicioReserva.agregarReserva(reserva1);
+
+        consola.mostrarReservasDesdeConsola(servicioReserva);
     }
 
 

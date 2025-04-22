@@ -62,4 +62,35 @@ public class ServicioPrestamos {
 
         prestar(recurso, usuario);
     }
+
+    public void mostrarTodosLosPrestamos() {
+        if (gestor.getPrestamos().isEmpty()) {
+            System.out.println("No hay préstamos registrados.");
+        } else {
+            System.out.println("=== Préstamos Registrados ===");
+            for (Prestamo p : gestor.getPrestamos()) {
+                System.out.println(p);
+                System.out.println("---------------");
+            }
+        }
+    }
+
+
+    public void mostrarPrestamosPorUsuario(Usuario usuario) {
+        List<Prestamo> prestamos = gestor.getPrestamos();
+        boolean encontrado = false;
+
+        for (Prestamo p : prestamos) {
+            if (p.getUsuario().getID() == usuario.getID()) {
+                System.out.println(p);
+                System.out.println("---------------");
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("📭 Este usuario no tiene préstamos registrados.");
+        }
+    }
+
 }

@@ -218,4 +218,8 @@ public class Consola {
             System.out.println(e.getMessage());
         }
     }
+
+    public void mostrarReservasDesdeConsola(ServicioReserva servicioReserva) {
+        servicioReserva.mostrarReservas();
+    }
 }
