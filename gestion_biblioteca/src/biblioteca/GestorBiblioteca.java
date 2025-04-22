@@ -34,7 +34,12 @@ public class GestorBiblioteca {
     public Usuario buscarUsuarioPorId(String id) {
         return usuarios.get(id);
     }
-
+    
+    public List<RecursoDigital> buscarPorTitulo(String titulo) {
+        return recursos.stream()
+                .filter(r -> r.getIdentificador().toLowerCase().contains(titulo.toLowerCase()))
+                .toList();
+    }
     //Devuelve lista de recursos
     public List<RecursoDigital> getRecursos() {
         return recursos;
