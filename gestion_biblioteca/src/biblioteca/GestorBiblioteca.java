@@ -7,6 +7,7 @@ import java.util.Map;
 public class GestorBiblioteca {
     private List<RecursoDigital> recursos;
     private Map<String, Usuario> usuarios;
+    private List<Prestamo> prestamos = new ArrayList<>();
 
     public GestorBiblioteca() {
         recursos = new ArrayList<>();
@@ -20,6 +21,10 @@ public class GestorBiblioteca {
 
     public void agregarUsuario(Usuario usuario) {
         usuarios.put(String.valueOf(usuario.getID()), usuario);
+    }
+
+    public void agregarPrestamo(Prestamo prestamo) {
+        prestamos.add(prestamo);
     }
 
     public RecursoDigital buscarRecursoPorTitulo(String titulo) {
@@ -52,9 +57,14 @@ public class GestorBiblioteca {
     public Map<String, Usuario> getUsuarios() {
         return usuarios;
     }
+
     public List<RecursoDigital> filtrarPorCategoria(CategoriaRecurso categoriaRecurso) {
         return recursos.stream()
                 .filter(r -> r.getCategoria() == categoriaRecurso)
                 .toList();
+    }
+
+     public List<Prestamo> getPrestamos() {
+        return prestamos;
     }
 }
