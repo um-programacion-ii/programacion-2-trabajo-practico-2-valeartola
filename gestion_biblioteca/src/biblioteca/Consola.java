@@ -1,7 +1,6 @@
 package biblioteca;
 
 import java.util.Scanner;
-//uso scanner para leer datos que ingresa el Usuario
 public class Consola {
     private Scanner scanner;
 
@@ -21,6 +20,14 @@ public class Consola {
         System.out.print("Ingrese una opción: ");
         return scanner.nextInt();
     }
+    public void mostrarMenuGestionRecursos() {
+        System.out.println("=== Gestión de Recursos ===");
+        System.out.println("1. Agregar recurso");
+        System.out.println("2. Buscar recurso por título");
+        System.out.println("3. Mostrar todos los recursos");
+        System.out.println("0. Volver al menú principal");
+    }
+
 
     public void mostrarMenuRecurso(RecursoDigital recurso) {
         String tipo = recurso.getClass().getSimpleName();
