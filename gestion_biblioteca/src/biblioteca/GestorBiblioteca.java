@@ -1,12 +1,16 @@
 package biblioteca;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GestorBiblioteca {
     private List<RecursoDigital> recursos;
+    private Map<String, Usuario> usuarios;
 
     public GestorBiblioteca() {
         recursos = new ArrayList<>();
+        usuarios = new HashMap<>();
 
     }
 
@@ -14,6 +18,9 @@ public class GestorBiblioteca {
         recursos.add(recurso);
     }
 
+    public void agregarUsuario(Usuario usuario) {
+        usuarios.put(String.valueOf(usuario.getID()), usuario);
+    }
 
     public RecursoDigital buscarRecursoPorTitulo(String titulo) {
         for (RecursoDigital recurso : recursos) {
@@ -24,11 +31,17 @@ public class GestorBiblioteca {
         return null;
     }
 
+    public Usuario buscarUsuarioPorId(String id) {
+        return usuarios.get(id);
+    }
 
     //Devuelve lista de recursos
     public List<RecursoDigital> getRecursos() {
         return recursos;
     }
 
+    public Map<String, Usuario> getUsuarios() {
+        return usuarios;
+    }
 
 }
