@@ -1,6 +1,6 @@
 package biblioteca;
 
-public enum Categoria {
+public enum CategoriaRecurso {
     NOVELA,
     CIENCIA,
     TECNOLOGIA,

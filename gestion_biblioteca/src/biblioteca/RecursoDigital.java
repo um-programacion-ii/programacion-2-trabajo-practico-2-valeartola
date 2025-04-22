@@ -4,14 +4,14 @@ public abstract class RecursoDigital implements RecursoDigitalInt{
     private String titulo;
     private int id;
     protected ServicioNotificaciones servicioNotificaciones;
-    private Categoria categoria;
+    private CategoriaRecurso categoriaRecurso;
 
 
-    public RecursoDigital(String titulo,int id, ServicioNotificaciones servicioNotificaciones, Categoria categoria) {
+    public RecursoDigital(String titulo,int id, ServicioNotificaciones servicioNotificaciones, CategoriaRecurso categoriaRecurso) {
         this.titulo = titulo;
         this.id = id;
         this.servicioNotificaciones = servicioNotificaciones;
-        this.categoria = categoria;
+        this.categoriaRecurso = categoriaRecurso;
 
     }
 
@@ -31,8 +31,8 @@ public abstract class RecursoDigital implements RecursoDigitalInt{
         this.id = id;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public CategoriaRecurso getCategoria() {
+        return categoriaRecurso;
     }
 
     @Override

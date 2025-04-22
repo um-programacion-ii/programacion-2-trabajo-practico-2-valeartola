@@ -3,8 +3,8 @@ package biblioteca;
 public class Revista extends RecursoDigital implements Prestable, Renovable{
     private int numeroEdicion;
 
-    public Revista(String titulo, int id, int numeroEdicion, ServicioNotificaciones servicioNotificaciones, Categoria categoria) {
-        super(titulo, id, servicioNotificaciones, categoria);
+    public Revista(String titulo, int id, int numeroEdicion, ServicioNotificaciones servicioNotificaciones, CategoriaRecurso categoriaRecurso) {
+        super(titulo, id, servicioNotificaciones, categoriaRecurso);
         this.numeroEdicion = numeroEdicion;
     }
 

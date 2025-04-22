@@ -5,8 +5,8 @@ public class Libro extends RecursoDigital implements Renovable, Prestable {
     private String autor;
     private int ano;
 
-    public Libro(String titulo, int id, String editorial, String autor, int ano, ServicioNotificaciones servicioNotificaciones, Categoria categoria) {
-        super(titulo, id, servicioNotificaciones, categoria);
+    public Libro(String titulo, int id, String editorial, String autor, int ano, ServicioNotificaciones servicioNotificaciones, CategoriaRecurso categoriaRecurso) {
+        super(titulo, id, servicioNotificaciones, categoriaRecurso);
         this.editorial = editorial;
         this.autor = autor;
         this.ano = ano;
