@@ -3,8 +3,8 @@ package biblioteca;
 public class Audiolibro extends RecursoDigital implements Prestable{
     private String canal;
 
-    public Audiolibro(String titulo, int id, String canal) {
-        super(titulo, id);
+    public Audiolibro(String titulo, int id, String canal, ServicioNotificaciones servicioNotificaciones) {
+        super(titulo, id, servicioNotificaciones);
         this.canal = canal;
     }
 
@@ -27,10 +27,12 @@ public class Audiolibro extends RecursoDigital implements Prestable{
     @Override
     public void prestar() {
         System.out.println("Audiolibro prestado.");
+        servicioNotificaciones.enviarNotificaciones("Se presto el AudioLibro: " + getTitulo());
     }
 
     @Override
     public void devolver() {
         System.out.println("Audiolibro devuelto.");
+        servicioNotificaciones.enviarNotificaciones("Se devolvio el AudioLibro: " + getTitulo());
     }
 }
