@@ -1,7 +1,7 @@
 package biblioteca;
 
 public interface RecursoDigitalInt {
-    int getId();
-    String getTitulo();
+    String getIdentificador();
     void mostrarInformacion();
+    void actualizarEstado();
 }

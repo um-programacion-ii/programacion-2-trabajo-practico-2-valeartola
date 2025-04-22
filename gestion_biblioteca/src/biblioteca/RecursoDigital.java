@@ -1,6 +1,6 @@
 package biblioteca;
 
-public abstract class RecursoDigital {
+public abstract class RecursoDigital implements RecursoDigitalInt{
     private String titulo;
     private int id;
     protected ServicioNotificaciones servicioNotificaciones;
