@@ -50,6 +50,36 @@ public class Consola {
         System.out.println("0. Volver al menú principal");
     }
 
+    public void mostrarMenuPrestamos(GestorBiblioteca gestor, ServicioPrestamos servicioPrestamos) {
+        System.out.println("=== Menú de Préstamos ===");
+        System.out.println("1. Realizar un préstamo");
+        System.out.println("2. Devolver un recurso");
+        System.out.println("3. Mostrar préstamos registrados");
+        System.out.println("4. Mostrar préstamos de un usuario");
+        System.out.println("0. Volver al menú principal");
+
+        int opcion = pedirOpcion();
+
+        switch (opcion) {
+            case 1:
+                realizarPrestamoDesdeConsola(gestor, servicioPrestamos);
+                break;
+            case 2:
+                devolverRecursoDesdeConsola(gestor, servicioPrestamos);
+                break;
+            case 3:
+                mostrarPrestamos(gestor);
+                break;
+            case 4:
+                mostrarPrestamosPorUsuario(gestor);
+                break;
+            case 0:
+                return;
+            default:
+                System.out.println("Opción inválida.");
+        }
+    }
+
     public void mostrarMenuOrdenamiento(GestorBiblioteca biblioteca) {
         System.out.println("=== Búsqueda y Ordenamiento ===");
         System.out.println("1. Buscar por título");
@@ -114,4 +144,78 @@ public class Consola {
         }
     }
 
+    private void realizarPrestamoDesdeConsola(GestorBiblioteca gestor, ServicioPrestamos servicioPrestamos) {
+        scanner.nextLine();
+        System.out.print("Ingrese el título del recurso: ");
+        String titulo = scanner.nextLine();
+
+        System.out.print("Ingrese ID del usuario: ");
+        String id = scanner.nextLine();
+
+        try {
+            servicioPrestamos.agregarPrestamo(titulo, id);
+        } catch (UsuarioNoEncontradoException e) {
+            System.out.println(e.getMessage());
+        } catch (RecursoNoDisponibleException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void mostrarPrestamos(GestorBiblioteca gestor) {
+        List<Prestamo> prestamos = gestor.getPrestamos();
+        if (prestamos.isEmpty()) {
+            System.out.println("No hay préstamos registrados.");
+            return;
+        }
+
+        System.out.println("=== Préstamos Registrados ===");
+        for (Prestamo p : prestamos) {
+            System.out.println(p);
+            System.out.println("---------------");
+        }
+    }
+
+    private void devolverRecursoDesdeConsola(GestorBiblioteca gestor, ServicioPrestamos servicioPrestamos) {
+        scanner.nextLine(); // limpiar buffer
+        System.out.print("Ingrese el título del recurso a devolver: ");
+        String titulo = scanner.nextLine();
+
+        List<RecursoDigital> recursos = gestor.buscarPorTitulo(titulo);
+
+        if (recursos.isEmpty()) {
+            System.out.println("Recurso no encontrado.");
+            return;
+        }
+
+        RecursoDigital recurso = recursos.get(0);
+
+        servicioPrestamos.devolver(recurso);
+    }
+
+    private void mostrarPrestamosPorUsuario(GestorBiblioteca gestor) {
+        scanner.nextLine();
+        System.out.print("Ingrese ID del usuario: ");
+        String id = scanner.nextLine();
+
+        try {
+            Usuario usuario = gestor.buscarUsuarioPorId(id);
+            List<Prestamo> prestamos = gestor.getPrestamos();
+
+            boolean encontrado = false;
+            for (Prestamo p : prestamos) {
+                if (p.getUsuario().getID() == usuario.getID()) {
+                    System.out.println(p);
+                    System.out.println("---------------");
+                    encontrado = true;
+                }
+            }
+
+            if (!encontrado) {
+                System.out.println("Este usuario no tiene préstamos registrados.");
+            }
+
+        } catch (UsuarioNoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

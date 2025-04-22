@@ -34,4 +34,12 @@ public class Prestamo {
     public void setFechaDevolucion(LocalDate fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
+
+    @Override
+    public String toString() {
+        return " Recurso: " + recurso.getIdentificador() +
+                " Usuario: " + usuario.getNombre() + " " + usuario.getApellido() +
+                " Prestado: " + fechaPrestamo +
+                " Devolver antes de: " + fechaDevolucion;
+    }
 }
