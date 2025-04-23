@@ -34,19 +34,21 @@ public class Libro extends RecursoDigital implements Renovable, Prestable {
     }
 
     @Override
-    public boolean estaDisponible() {
+    public synchronized boolean estaDisponible() {
         return getEstado() == EstadoRecurso.DISPONIBLE;
     }
 
     @Override
-    public void prestar(Usuario usuario) {
+    public synchronized void prestar(Usuario usuario) {
+        System.out.println("[HILO " + Thread.currentThread().getName() + "] → Intentando prestar: " + getTitulo());
         if (!estaDisponible()) {
+            System.out.println("[HILO " + Thread.currentThread().getName() + "] No disponible para préstamo.");
             throw new RecursoNoDisponibleException("No se puede prestar el LIBRO " + getTitulo() + " No disponible");
         }
 
         actualizarEstado(EstadoRecurso.PRESTADO);
 
-        System.out.println("Libro prestado.");
+        System.out.println("[HILO " + Thread.currentThread().getName() + "] Préstamo exitoso de: " + getTitulo());
 
         if (servicioNotificaciones instanceof ServicioNotificacionesEmail) {
             servicioNotificaciones.enviarNotificaciones("Se prestó el Libro: " + getTitulo(), usuario.getMail());
@@ -56,9 +58,10 @@ public class Libro extends RecursoDigital implements Renovable, Prestable {
     }
 
     @Override
-    public void devolver(Usuario usuario) {
+    public synchronized void devolver(Usuario usuario) {
+        System.out.println("[HILO " + Thread.currentThread().getName() + "] → Intentando devolver: " + getTitulo());
         actualizarEstado(EstadoRecurso.DISPONIBLE);
-        System.out.println("Libro devuelto.");
+        System.out.println("[HILO " + Thread.currentThread().getName() + "] Devolución exitosa de: " + getTitulo());
         if (servicioNotificaciones instanceof ServicioNotificacionesEmail) {
             servicioNotificaciones.enviarNotificaciones("Se devolvió el Libro: " + getTitulo(), usuario.getMail());
         } else if (servicioNotificaciones instanceof ServicioNotificacionesSMS) {
@@ -67,8 +70,17 @@ public class Libro extends RecursoDigital implements Renovable, Prestable {
     }
 
     @Override
-    public void renovar(Usuario usuario ) {
+    public synchronized void renovar(Usuario usuario ) {
+        System.out.println("[HILO " + Thread.currentThread().getName() + "] → Intentando renovar: " + getTitulo());
         System.out.println("Libro renovado.");
+
+        if (!getEstado().equals(EstadoRecurso.PRESTADO)) {
+            System.out.println("[HILO " + Thread.currentThread().getName() + "] No se puede renovar: el recurso no está prestado.");
+            return;
+        }
+
+        System.out.println("[HILO " + Thread.currentThread().getName() + "] Renovación exitosa de: " + getTitulo());
+
         if (servicioNotificaciones instanceof ServicioNotificacionesEmail) {
             servicioNotificaciones.enviarNotificaciones("Se renovo el AudioLibro: " + getTitulo(), usuario.getMail());
         } else if (servicioNotificaciones instanceof ServicioNotificacionesSMS) {
