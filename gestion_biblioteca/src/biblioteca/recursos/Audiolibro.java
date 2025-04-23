@@ -1,6 +1,15 @@
-package biblioteca;
+package biblioteca.recursos;
 
-public class Audiolibro extends RecursoDigital implements Prestable{
+import biblioteca.estado.CategoriaRecurso;
+import biblioteca.estado.EstadoRecurso;
+import biblioteca.excepciones.RecursoNoDisponibleException;
+import biblioteca.interfaces.Prestable;
+import biblioteca.servicios.ServicioNotificaciones;
+import biblioteca.servicios.ServicioNotificacionesEmail;
+import biblioteca.servicios.ServicioNotificacionesSMS;
+import biblioteca.usuario.Usuario;
+
+public class Audiolibro extends RecursoDigital implements Prestable {
     private String canal;
 
     public Audiolibro(String titulo, int id, String canal, ServicioNotificaciones servicioNotificaciones, CategoriaRecurso categoriaRecurso) {

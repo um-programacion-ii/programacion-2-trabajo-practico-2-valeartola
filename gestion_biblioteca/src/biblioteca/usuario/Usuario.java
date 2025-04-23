@@ -1,4 +1,4 @@
-package biblioteca;
+package biblioteca.usuario;
 
 public class Usuario {
     protected String nombre;

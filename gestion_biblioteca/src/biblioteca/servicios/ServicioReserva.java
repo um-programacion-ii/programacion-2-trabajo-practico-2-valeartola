@@ -1,4 +1,6 @@
-package biblioteca;
+package biblioteca.servicios;
+
+import biblioteca.recursos.Reserva;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

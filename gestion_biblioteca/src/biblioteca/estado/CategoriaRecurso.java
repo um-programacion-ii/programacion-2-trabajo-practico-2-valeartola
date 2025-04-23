@@ -1,4 +1,4 @@
-package biblioteca;
+package biblioteca.estado;
 
 public enum CategoriaRecurso {
     NOVELA,

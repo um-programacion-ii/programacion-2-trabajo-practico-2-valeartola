@@ -1,14 +1,16 @@
-package biblioteca;
+package biblioteca.servicios;
+
+import biblioteca.recursos.NotificacionesSMS;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ServicioNotificacionesEmail implements ServicioNotificaciones {
+public class ServicioNotificacionesSMS implements ServicioNotificaciones {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Override
     public void enviarNotificaciones(String mensaje, String destinatario) {
-        NotificacionesEmail notificacion = new NotificacionesEmail(mensaje, destinatario);
+        NotificacionesSMS notificacion = new NotificacionesSMS(mensaje, destinatario); // o número dinámico si querés
         executor.execute(notificacion::enviar);
     }
 

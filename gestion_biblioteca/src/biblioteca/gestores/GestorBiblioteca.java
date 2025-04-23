@@ -1,4 +1,10 @@
-package biblioteca;
+package biblioteca.gestores;
+import biblioteca.estado.CategoriaRecurso;
+import biblioteca.excepciones.UsuarioNoEncontradoException;
+import biblioteca.recursos.Prestamo;
+import biblioteca.recursos.RecursoDigital;
+import biblioteca.usuario.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;

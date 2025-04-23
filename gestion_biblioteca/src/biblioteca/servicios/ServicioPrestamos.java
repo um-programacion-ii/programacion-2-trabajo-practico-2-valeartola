@@ -1,4 +1,12 @@
-package biblioteca;
+package biblioteca.servicios;
+import biblioteca.estado.EstadoRecurso;
+import biblioteca.excepciones.RecursoNoDisponibleException;
+import biblioteca.gestores.GestorBiblioteca;
+import biblioteca.interfaces.Prestable;
+import biblioteca.recursos.Prestamo;
+import biblioteca.recursos.RecursoDigital;
+import biblioteca.usuario.Usuario;
+
 import java.time.LocalDate;
 import java.util.List;
 

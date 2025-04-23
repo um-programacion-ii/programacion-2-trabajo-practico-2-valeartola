@@ -1,6 +1,11 @@
-package biblioteca;
+package biblioteca.recursos;
 
-public abstract class RecursoDigital implements RecursoDigitalInt{
+import biblioteca.estado.CategoriaRecurso;
+import biblioteca.estado.EstadoRecurso;
+import biblioteca.interfaces.RecursoDigitalInt;
+import biblioteca.servicios.ServicioNotificaciones;
+
+public abstract class RecursoDigital implements RecursoDigitalInt {
     private String titulo;
     private int id;
     protected ServicioNotificaciones servicioNotificaciones;
