@@ -57,18 +57,17 @@ public class Main {
 
         gestorBiblioteca.agregarUsuario(usuario1);
 
-        Libro libro3  = new Libro("El Principito", 101, "Editorial Salamandra", "Antoine", 1943, mail, CategoriaRecurso.FICCION);
+        Libro libro3 = new Libro("El Principito", 101, "Editorial Salamandra", "Antoine", 1943, mail, CategoriaRecurso.FICCION);
         gestorBiblioteca.agregarRecurso(libro2);
         gestorBiblioteca.agregarRecurso(libro3);
         gestorBiblioteca.agregarRecurso(revista);
         gestorBiblioteca.agregarRecurso(audiolibro1);
 
 
-
         RecursoDigital encontrado = gestorBiblioteca.buscarRecursoPorTitulo("El Principito");
         RecursoDigital encontradoRev = gestorBiblioteca.buscarRecursoPorTitulo("Nosotros en la luna");
 
-        if(encontrado != null){
+        if (encontrado != null) {
             encontrado.mostrarInformacion();
         }
 
@@ -116,15 +115,43 @@ public class Main {
         servicioReserva.agregarReserva(reserva1);
         servicioReserva.mostrarReservas();
 
+        System.out.println("---Pruebas Notificaciones---");
 
         Notificaciones noti1 = new NotificacionesEmail("Tu libro fue prestado con éxito", usuario1.getMail());
         Notificaciones noti2 = new NotificacionesSMS("Recordatorio de devolución", usuario1.getTelefono());
         noti1.enviar();
         noti2.enviar();
 
-        mail.cerrar();
-        sms.cerrar();
+        System.out.println("---Pruebas Concurrencia---");
+
+        Audiolibro audioLibroTest = new Audiolibro("Audiolibro Concurrencia", 999, "1h", sms, CategoriaRecurso.CIENCIA);
+
+        Usuario usuario2 = new Usuario("Mauro", "Codina", "mc@correo.com", 55888999, "123456789");
+        Usuario usuario3 = new Usuario("Alejandra", "Manrique", "am@correo.com", 44999000, "987654321");
+
+        Thread hilo1 = new Thread(() -> {
+            audioLibroTest.prestar(usuario2);
+        }, "Hilo-A");
+
+        Thread hilo2 = new Thread(() -> {
+            try {
+                audioLibroTest.prestar(usuario3);
+            } catch (RecursoNoDisponibleException e) {
+                System.out.println("[HILO Hilo-B] " + e.getMessage());
+            }
+        }, "Hilo-B");
+
+
+        hilo1.start();
+        hilo2.start();
+
+        try {
+            hilo1.join();
+            hilo2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
-
-
 }
+
