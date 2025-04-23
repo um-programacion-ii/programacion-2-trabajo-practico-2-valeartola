@@ -1,4 +1,5 @@
 package biblioteca.servicios;
+import biblioteca.alerta.AlertaVencimiento;
 import biblioteca.estado.EstadoRecurso;
 import biblioteca.excepciones.RecursoNoDisponibleException;
 import biblioteca.gestores.GestorBiblioteca;
@@ -13,9 +14,11 @@ import java.util.List;
 
 public class ServicioPrestamos {
     private GestorBiblioteca gestor;
+    private final ServicioAlertas servicioAlertas;
 
     public ServicioPrestamos(GestorBiblioteca gestor) {
         this.gestor = gestor;
+        this.servicioAlertas = new ServicioAlertas(gestor);
     }
 
     public void prestar(RecursoDigital recurso, Usuario usuario) {
@@ -25,23 +28,27 @@ public class ServicioPrestamos {
                 return;
             }
 
-            ((Prestable) recurso).prestar(usuario); // esto ya lanza excepción si está prestado
+            ((Prestable) recurso).prestar(usuario);
 
             recurso.actualizarEstado(EstadoRecurso.PRESTADO);
 
-            LocalDate fechaPrestamo = LocalDate.now();
-            LocalDate fechaDevolucion = fechaPrestamo.plusDays(15);
-
-            Prestamo prestamo = new Prestamo(recurso, usuario, fechaPrestamo, fechaDevolucion);
+            Prestamo prestamo = new Prestamo(recurso, usuario);
             gestor.agregarPrestamo(prestamo);
 
             System.out.println("Préstamo exitoso: " + prestamo);
+
+            List<AlertaVencimiento> alertas = servicioAlertas.obtenerAlertasPendientes();
+            for (AlertaVencimiento alerta : alertas) {
+                alerta.mostrarAlerta();
+            }
+
         } catch (RecursoNoDisponibleException e) {
             System.out.println( e.getMessage());
         }
     }
 
-    public void devolver(RecursoDigital recurso, Usuario usuario ) {
+
+    public void devolver(RecursoDigital recurso, Usuario usuario) {
         if (!(recurso instanceof Prestable)) {
             System.out.println("❌ Este recurso no se puede devolver.");
             return;
@@ -50,7 +57,7 @@ public class ServicioPrestamos {
         ((Prestable) recurso).devolver(usuario);
         recurso.actualizarEstado(EstadoRecurso.DISPONIBLE);
 
-        System.out.println("Devolución exitosa");
+        System.out.println("Devolucion exitosa");
     }
 
     public void agregarPrestamo(String titulo, String idUsuario) {
@@ -63,13 +70,10 @@ public class ServicioPrestamos {
         RecursoDigital recurso = encontrados.get(0);
 
         Usuario usuario = gestor.buscarUsuarioPorId(idUsuario);
-        if (usuario == null) {
-            System.out.println("Usuario no encontrado.");
-            return;
-        }
 
         prestar(recurso, usuario);
     }
+
 
     public void mostrarTodosLosPrestamos() {
         if (gestor.getPrestamos().isEmpty()) {
@@ -100,5 +104,4 @@ public class ServicioPrestamos {
             System.out.println("Este usuario no tiene préstamos registrados.");
         }
     }
-
 }
