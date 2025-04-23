@@ -1,4 +1,17 @@
-package biblioteca;
+package biblioteca.consola;
+
+import biblioteca.estado.CategoriaRecurso;
+import biblioteca.excepciones.RecursoNoDisponibleException;
+import biblioteca.excepciones.UsuarioNoEncontradoException;
+import biblioteca.gestores.GestorBiblioteca;
+import biblioteca.interfaces.Prestable;
+import biblioteca.interfaces.Renovable;
+import biblioteca.recursos.Prestamo;
+import biblioteca.recursos.RecursoDigital;
+import biblioteca.servicios.ServicioPrestamos;
+import biblioteca.servicios.ServicioReportes;
+import biblioteca.servicios.ServicioReserva;
+import biblioteca.usuario.Usuario;
 
 import java.util.List;
 import java.util.Scanner;
@@ -29,6 +42,37 @@ public class Consola {
         System.out.println("2. Buscar recurso por título");
         System.out.println("3. Mostrar todos los recursos");
         System.out.println("0. Volver al menú principal");
+    }
+
+    public void mostrarMenuReportes(GestorBiblioteca gestor, ServicioReportes servicioReportes) {
+        int opcion;
+        do {
+            System.out.println("=== Reportes y Estadísticas ===");
+            System.out.println("1. Recursos más prestados");
+            System.out.println("2. Usuarios más activos");
+            System.out.println("3. Estadísticas por categoría");
+            System.out.println("0. Volver al menú principal");
+
+            opcion = pedirOpcion();
+
+            switch (opcion) {
+                case 1:
+                    servicioReportes.reporteRecursosMasPrestados(5);
+                    break;
+                case 2:
+                    servicioReportes.reporteUsuariosMasActivos(5);
+                    break;
+                case 3:
+                    servicioReportes.reporteEstadisticasPorCategoria();
+                    break;
+                case 0:
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+            System.out.println();
+        } while (opcion != 0);
     }
 
 

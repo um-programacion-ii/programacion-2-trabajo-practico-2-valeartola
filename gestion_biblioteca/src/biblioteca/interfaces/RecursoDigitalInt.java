@@ -1,4 +1,7 @@
-package biblioteca;
+package biblioteca.interfaces;
+
+import biblioteca.estado.CategoriaRecurso;
+import biblioteca.estado.EstadoRecurso;
 
 public interface RecursoDigitalInt {
     String getIdentificador();

@@ -1,4 +1,14 @@
-package biblioteca;
+package biblioteca.recursos;
+
+import biblioteca.estado.CategoriaRecurso;
+import biblioteca.estado.EstadoRecurso;
+import biblioteca.excepciones.RecursoNoDisponibleException;
+import biblioteca.interfaces.Prestable;
+import biblioteca.interfaces.Renovable;
+import biblioteca.servicios.ServicioNotificaciones;
+import biblioteca.servicios.ServicioNotificacionesEmail;
+import biblioteca.servicios.ServicioNotificacionesSMS;
+import biblioteca.usuario.Usuario;
 
 public class Revista extends RecursoDigital implements Prestable, Renovable {
     private int numeroEdicion;

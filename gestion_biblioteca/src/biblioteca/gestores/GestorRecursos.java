@@ -1,4 +1,6 @@
-package biblioteca;
+package biblioteca.gestores;
+
+import biblioteca.recursos.RecursoDigital;
 
 import java.util.ArrayList;
 

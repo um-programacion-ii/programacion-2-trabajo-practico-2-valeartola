@@ -1,4 +1,4 @@
-package biblioteca;
+package biblioteca.recursos;
 
 public class NotificacionesSMS extends Notificaciones {
     private String destinatarioSMS;

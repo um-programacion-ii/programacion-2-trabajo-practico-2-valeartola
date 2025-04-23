@@ -1,6 +1,6 @@
-package biblioteca;
+package biblioteca.recursos;
 
-public class NotificacionesEmail extends Notificaciones{
+public class NotificacionesEmail extends Notificaciones {
     private String destinatarioMail;
 
     public NotificacionesEmail(String mensaje, String destinatario) {

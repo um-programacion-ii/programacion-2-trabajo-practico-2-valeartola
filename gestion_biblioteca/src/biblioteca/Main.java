@@ -1,7 +1,15 @@
 package biblioteca;
 
+import biblioteca.consola.Consola;
+import biblioteca.estado.CategoriaRecurso;
+import biblioteca.excepciones.RecursoNoDisponibleException;
+import biblioteca.gestores.GestorBiblioteca;
+import biblioteca.interfaces.Prestable;
+import biblioteca.recursos.*;
+import biblioteca.servicios.*;
+import biblioteca.usuario.Usuario;
+
 import java.util.List;
-import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,6 +30,7 @@ public class Main {
         consola.mostrarMenu();
 
         Usuario usuario1 = new Usuario("Valentina", "Artola", "valeart@mail.com", 48965782, "26185964826");
+        Usuario usuario4 = new Usuario("Dakota", "Artola", "dakota@mail", 11222333, "2611122333");
         int opcion = 2;
 
         if (opcion == 2) {
@@ -151,7 +160,11 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("---Prueba menu reportes---");
 
+        ServicioReportes servicioReportes = new ServicioReportes(gestorBiblioteca);
+
+        consola.mostrarMenuReportes(gestorBiblioteca, servicioReportes);
     }
 }
 

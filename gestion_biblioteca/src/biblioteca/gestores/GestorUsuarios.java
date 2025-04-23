@@ -1,4 +1,6 @@
-package biblioteca;
+package biblioteca.gestores;
+
+import biblioteca.usuario.Usuario;
 
 import java.util.ArrayList;
 

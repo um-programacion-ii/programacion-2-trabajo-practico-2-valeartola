@@ -1,4 +1,4 @@
-package biblioteca;
+package biblioteca.recursos;
 
 import java.time.LocalDateTime;
 
