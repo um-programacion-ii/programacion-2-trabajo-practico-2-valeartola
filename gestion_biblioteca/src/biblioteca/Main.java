@@ -9,6 +9,7 @@ import biblioteca.recursos.*;
 import biblioteca.servicios.*;
 import biblioteca.usuario.Usuario;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
@@ -104,7 +105,7 @@ public class Main {
 
         consola.buscarUsuarioPorId(gestorBiblioteca);
 
-        ((Prestable) libro3).prestar(usuario1); //
+        ((Prestable) libro3).prestar(usuario1);
 
         consola.prestarRecursos(libro3, usuario1);
 
@@ -160,11 +161,21 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("---Prueba menu reportes---");
+//        System.out.println("---Prueba menu reportes---");
+//
+//        ServicioReportes servicioReportes = new ServicioReportes(gestorBiblioteca);
+//
+//        consola.mostrarMenuReportes(gestorBiblioteca, servicioReportes)
 
-        ServicioReportes servicioReportes = new ServicioReportes(gestorBiblioteca);
+        ((Prestable) libro3).prestar(usuario1);
+        Prestamo prestamo = new Prestamo(libro3, usuario1);
+        prestamo.setFechaDevolucion(LocalDate.now());
+        gestorBiblioteca.agregarPrestamo(prestamo);
 
-        consola.mostrarMenuReportes(gestorBiblioteca, servicioReportes);
+
+        ServicioAlertas servicioAlertas = new ServicioAlertas(gestorBiblioteca);
+        consola.mostrarAlertas(gestorBiblioteca);
+
     }
 }
 

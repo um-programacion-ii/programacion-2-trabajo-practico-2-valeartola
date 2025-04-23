@@ -13,8 +13,8 @@ public class Prestamo {
     public Prestamo(RecursoDigital recurso, Usuario usuario, LocalDate fechaPrestamo, LocalDate fechaDevolucion) {
         this.recurso = recurso;
         this.usuario = usuario;
-        this.fechaPrestamo = fechaPrestamo;
-        this.fechaDevolucion = fechaDevolucion;
+        this.fechaPrestamo = LocalDate.now();
+        this.fechaDevolucion = fechaPrestamo.plusDays(7);
     }
 
     public RecursoDigital getRecurso() {
@@ -32,6 +32,7 @@ public class Prestamo {
     public LocalDate getFechaDevolucion() {
         return fechaDevolucion;
     }
+
 
     public void setFechaDevolucion(LocalDate fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
