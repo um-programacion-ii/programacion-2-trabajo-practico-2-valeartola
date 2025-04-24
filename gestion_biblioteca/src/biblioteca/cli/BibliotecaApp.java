@@ -1,11 +1,15 @@
 package biblioteca.cli;
 
 
+import biblioteca.alerta.HistorialAlertas;
+import biblioteca.alerta.NivelUrgencia;
+import biblioteca.alerta.Recordatorios;
 import biblioteca.consola.Consola;
 import biblioteca.estado.CategoriaRecurso;
 import biblioteca.excepciones.RecursoNoDisponibleException;
 import biblioteca.gestores.GestorBiblioteca;
 import biblioteca.interfaces.Prestable;
+import biblioteca.interfaces.Renovable;
 import biblioteca.recursos.*;
 import biblioteca.servicios.*;
 import biblioteca.usuario.Usuario;
@@ -16,44 +20,56 @@ import java.util.List;
 public class BibliotecaApp {
     private Consola consola;
     private GestorBiblioteca gestorBiblioteca;
-    private ServicioNotificacionesEmail mail;
-    private ServicioNotificacionesSMS sms;
     private ServicioReserva servicioReserva;
     private ServicioPrestamos servicioPrestamos;
     private ServicioAlertas servicioAlertas;
+    private HistorialAlertas historialAlertas;
+    private Recordatorios recordatorios;
+    private Usuario usuario1, usuario2, usuario4;
+    private RecursoDigital libro1, libro2, libro3, revista, audiolibro1;
+
 
     public BibliotecaApp() {
         consola = new Consola();
         gestorBiblioteca = new GestorBiblioteca();
-        mail = new ServicioNotificacionesEmail();
-        sms = new ServicioNotificacionesSMS();
         servicioReserva = new ServicioReserva();
         servicioPrestamos = new ServicioPrestamos(gestorBiblioteca, servicioReserva);
         servicioAlertas = new ServicioAlertas(gestorBiblioteca);
-    }
+        recordatorios = new Recordatorios(servicioAlertas, historialAlertas);
+        historialAlertas = new HistorialAlertas();
 
+    }
     public void iniciar() {
         consola.mostrarMenu();
-
-        Usuario usuario1 = new Usuario("Valentina", "Artola", "valeart@mail.com", 48965782, "26185964826");
-        Usuario usuario2 = new Usuario("Mauro", "Codina", "mc@correo.com", 55888999, "123456789");
-        Usuario usuario4 = new Usuario("Dakota", "Artola", "dakota@mail", 11222333, "2611122333");
+        crearUsuariosDemo();
+        crearRecursosDemo();
+        pruebasBusquedaYCategorias();
+        pruebasPrestamosYReservas();
+        pruebasAlertasYNotificaciones();
+    }
+    private void crearUsuariosDemo() {
+        usuario1 = new Usuario("Valentina", "Artola", 48965782, "valeart@mail.com", "26185964826", TipoNotificacion.EMAIL, NivelUrgencia.INFO);
+        usuario2 = new Usuario("Mauro", "Codina", 55888999, "mc@correo.com", "123456789", TipoNotificacion.SMS, NivelUrgencia.INFO);
+        usuario4 = new Usuario("Dakota", "Artola", 11222333, "dakota@mail", "2611122333", TipoNotificacion.EMAIL, NivelUrgencia.INFO);
 
         gestorBiblioteca.agregarUsuario(usuario1);
         gestorBiblioteca.agregarUsuario(usuario2);
-
-        Libro libro1 = new Libro("Antes de que se enfrie el cafe", 1, "Penguin", "Toshikazu Kawaguchi", 2020, mail, CategoriaRecurso.INTERES);
-        Libro libro3 = new Libro("El Principito", 101, "Editorial Salamandra", "Antoine", 1943, mail, CategoriaRecurso.FICCION);
-        RecursoDigital libro2 = new Libro("Nosotros en la luna", 2, "Planeta", "Alice Kellen", 2024, sms, CategoriaRecurso.ROMANCE);
-        RecursoDigital revista = new Revista("Caras", 2, 30, sms, CategoriaRecurso.INTERES);
-        RecursoDigital audiolibro1 = new Audiolibro("Dakota", 4, "Mercedes S.", sms, CategoriaRecurso.FICCION);
+        gestorBiblioteca.agregarUsuario(usuario4);
+    }
+    private void crearRecursosDemo() {
+        libro1 = new Libro("Antes de que se enfrie el cafe", 1, "Penguin", "Toshikazu Kawaguchi", 2020, CategoriaRecurso.INTERES);
+        libro3 = new Libro("El Principito", 101, "Editorial Salamandra", "Antoine", 1943, CategoriaRecurso.FICCION);
+        libro2 = new Libro("Nosotros en la luna", 2, "Planeta", "Alice Kellen", 2024, CategoriaRecurso.ROMANCE);
+        revista = new Revista("Caras", 2, 30, CategoriaRecurso.INTERES);
+        audiolibro1 = new Audiolibro("Dakota", 4, "Mercedes S.", CategoriaRecurso.FICCION);
 
         gestorBiblioteca.agregarRecurso(libro1);
         gestorBiblioteca.agregarRecurso(libro2);
         gestorBiblioteca.agregarRecurso(libro3);
         gestorBiblioteca.agregarRecurso(revista);
         gestorBiblioteca.agregarRecurso(audiolibro1);
-
+    }
+    private void pruebasBusquedaYCategorias() {
         consola.mostrarMenuRecurso(libro2);
         consola.mostrarMenuRecurso(audiolibro1);
 
@@ -70,7 +86,8 @@ public class BibliotecaApp {
 
         consola.mostrarMenuOrdenamiento(gestorBiblioteca);
         consola.buscarUsuarioPorId(gestorBiblioteca);
-
+    }
+    private void pruebasPrestamosYReservas() {
         consola.prestarRecursos(libro3, usuario1);
         servicioPrestamos.prestar(libro2, usuario1);
         consola.mostrarMenuPrestamos(gestorBiblioteca, servicioPrestamos, usuario1);
@@ -81,8 +98,17 @@ public class BibliotecaApp {
         servicioReserva.agregarReserva(reserva2);
         servicioReserva.mostrarReservas();
 
-        consola.mostrarAlertas(gestorBiblioteca);
         servicioPrestamos.devolver(libro2, usuario1);
     }
+
+    private void pruebasAlertasYNotificaciones() {
+        consola.mostrarAlertas(gestorBiblioteca);
+        recordatorios.iniciar();
+        historialAlertas.mostrarHistorial();
+
+        ((Renovable) libro3).renovar(usuario1);
+        ((Prestable) libro3).devolver(usuario2);
+    }
+
 }
 
