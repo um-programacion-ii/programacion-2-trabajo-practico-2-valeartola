@@ -10,7 +10,7 @@ public class Prestamo {
     private LocalDate fechaPrestamo;
     private LocalDate fechaDevolucion;
 
-    public Prestamo(RecursoDigital recurso, Usuario usuario, LocalDate fechaPrestamo, LocalDate fechaDevolucion) {
+    public Prestamo(RecursoDigital recurso, Usuario usuario) {
         this.recurso = recurso;
         this.usuario = usuario;
         this.fechaPrestamo = LocalDate.now();

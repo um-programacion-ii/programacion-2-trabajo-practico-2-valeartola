@@ -1,4 +1,5 @@
 package biblioteca.servicios;
+import biblioteca.alerta.AlertaDisponibilidad;
 import biblioteca.alerta.AlertaVencimiento;
 import biblioteca.estado.EstadoRecurso;
 import biblioteca.excepciones.RecursoNoDisponibleException;
@@ -6,19 +7,23 @@ import biblioteca.gestores.GestorBiblioteca;
 import biblioteca.interfaces.Prestable;
 import biblioteca.recursos.Prestamo;
 import biblioteca.recursos.RecursoDigital;
+import biblioteca.recursos.Reserva;
 import biblioteca.usuario.Usuario;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class ServicioPrestamos {
     private GestorBiblioteca gestor;
     private final ServicioAlertas servicioAlertas;
+    private final ServicioReserva servicioReserva;
 
-    public ServicioPrestamos(GestorBiblioteca gestor) {
+
+    public ServicioPrestamos(GestorBiblioteca gestor, ServicioReserva servicioReserva) {
         this.gestor = gestor;
         this.servicioAlertas = new ServicioAlertas(gestor);
+        this.servicioReserva = new ServicioReserva();
     }
 
     public void prestar(RecursoDigital recurso, Usuario usuario) {
@@ -50,7 +55,7 @@ public class ServicioPrestamos {
 
     public void devolver(RecursoDigital recurso, Usuario usuario) {
         if (!(recurso instanceof Prestable)) {
-            System.out.println("❌ Este recurso no se puede devolver.");
+            System.out.println("Este recurso no se puede devolver.");
             return;
         }
 
@@ -58,6 +63,27 @@ public class ServicioPrestamos {
         recurso.actualizarEstado(EstadoRecurso.DISPONIBLE);
 
         System.out.println("Devolucion exitosa");
+        Reserva siguienteReserva = servicioReserva.obtenerSiguienteReserva(recurso);
+
+        if (siguienteReserva != null) {
+            AlertaDisponibilidad alerta = new AlertaDisponibilidad(siguienteReserva);
+            alerta.mostrarAlerta();
+
+            Scanner scanner = new Scanner(System.in);
+            String respuesta = scanner.nextLine();
+
+            if (respuesta.equalsIgnoreCase("si")) {
+                try {
+                    prestar(recurso, siguienteReserva.getUsuario());
+                    servicioReserva.eliminarReserva(siguienteReserva);
+                    System.out.println("El recurso fue prestado al usuario que lo había reservado.");
+                } catch (RecursoNoDisponibleException e) {
+                    System.out.println("El recurso ya no está disponible.");
+                }
+            } else {
+                System.out.println("El usuario decidió no tomar el recurso por ahora.");
+            }
+        }
     }
 
     public void agregarPrestamo(String titulo, String idUsuario) {
