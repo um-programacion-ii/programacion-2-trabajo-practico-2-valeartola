@@ -5,16 +5,14 @@ import biblioteca.estado.EstadoRecurso;
 import biblioteca.excepciones.RecursoNoDisponibleException;
 import biblioteca.interfaces.Prestable;
 import biblioteca.interfaces.Renovable;
-import biblioteca.servicios.ServicioNotificaciones;
-import biblioteca.servicios.ServicioNotificacionesEmail;
-import biblioteca.servicios.ServicioNotificacionesSMS;
+import biblioteca.servicios.ServicioNotificadorPreferencia;
 import biblioteca.usuario.Usuario;
 
 public class Revista extends RecursoDigital implements Prestable, Renovable {
     private int numeroEdicion;
 
-    public Revista(String titulo, int id, int numeroEdicion, ServicioNotificaciones servicioNotificaciones, CategoriaRecurso categoriaRecurso) {
-        super(titulo, id, servicioNotificaciones, categoriaRecurso);
+    public Revista(String titulo, int id, int numeroEdicion, CategoriaRecurso categoriaRecurso) {
+        super(titulo, id, categoriaRecurso);
         this.numeroEdicion = numeroEdicion;
     }
 
@@ -49,11 +47,8 @@ public class Revista extends RecursoDigital implements Prestable, Renovable {
 
         System.out.println("[HILO " + Thread.currentThread().getName() + "] ✅ Préstamo exitoso de: " + getTitulo());
 
-        if (servicioNotificaciones instanceof ServicioNotificacionesEmail) {
-            servicioNotificaciones.enviarNotificaciones("Se presto la revista: " + getTitulo(), usuario.getMail());
-        } else if (servicioNotificaciones instanceof ServicioNotificacionesSMS) {
-            servicioNotificaciones.enviarNotificaciones("Se presto la revista: " + getTitulo(), usuario.getTelefono());
-        }
+        ServicioNotificadorPreferencia.notificar("Se prestó la Revista: " + getTitulo(), usuario);
+
     }
 
     @Override
@@ -61,11 +56,8 @@ public class Revista extends RecursoDigital implements Prestable, Renovable {
         System.out.println("[HILO " + Thread.currentThread().getName() + "] → Intentando devolver: " + getTitulo());
         actualizarEstado(EstadoRecurso.DISPONIBLE);
         System.out.println("[HILO " + Thread.currentThread().getName() + "] Devolución exitosa de: " + getTitulo());
-        if (servicioNotificaciones instanceof ServicioNotificacionesEmail) {
-            servicioNotificaciones.enviarNotificaciones("Se devolvió la revista: " + getTitulo(), usuario.getMail());
-        } else if (servicioNotificaciones instanceof ServicioNotificacionesSMS) {
-            servicioNotificaciones.enviarNotificaciones("Se devolvió la revista: " + getTitulo(), usuario.getTelefono());
-        }
+        ServicioNotificadorPreferencia.notificar("Se devolvio la Revista: " + getTitulo(), usuario);
+
     }
 
     @Override
@@ -78,9 +70,7 @@ public class Revista extends RecursoDigital implements Prestable, Renovable {
         }
 
         System.out.println("[HILO " + Thread.currentThread().getName() + "] ✅ Renovación exitosa de: " + getTitulo());
-        if (servicioNotificaciones instanceof ServicioNotificacionesEmail) {
-            servicioNotificaciones.enviarNotificaciones("Se renovo la revista: " + getTitulo(), usuario.getMail());
-        }
+        ServicioNotificadorPreferencia.notificar("Se renovo la Revista: " + getTitulo(), usuario);
 
     }
 }

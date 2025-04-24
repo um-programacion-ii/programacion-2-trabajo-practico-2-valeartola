@@ -1,15 +1,25 @@
 package biblioteca.alerta;
 
 import biblioteca.recursos.Reserva;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class AlertaDisponibilidad {
     private final Reserva reserva;
     private final String mensaje;
+    private NivelUrgencia nivelUrgencia;
+
 
     //Constructor
     public AlertaDisponibilidad(Reserva reserva) {
         this.reserva = reserva;
         this.mensaje = "El recurso reservado esta DISPONIBLE";
+        this.nivelUrgencia = calcularUrgencia();
+
+    }
+
+    private NivelUrgencia calcularUrgencia() {
+        return NivelUrgencia.INFO;
     }
 
     public void mostrarAlerta() {
