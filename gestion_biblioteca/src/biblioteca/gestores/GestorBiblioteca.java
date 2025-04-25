@@ -1,6 +1,7 @@
 package biblioteca.gestores;
 import biblioteca.estado.CategoriaRecurso;
 import biblioteca.excepciones.UsuarioNoEncontradoException;
+import biblioteca.interfaces.RecursoDigitalInt;
 import biblioteca.recursos.Prestamo;
 import biblioteca.recursos.RecursoDigital;
 import biblioteca.usuario.Usuario;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GestorBiblioteca {
-    private List<RecursoDigital> recursos;
+    private List<RecursoDigitalInt> recursos;
     private Map<String, Usuario> usuarios;
     private List<Prestamo> prestamos = new ArrayList<>();
 
@@ -21,7 +22,7 @@ public class GestorBiblioteca {
 
     }
 
-    public void agregarRecurso(RecursoDigital recurso) {
+    public void agregarRecurso(RecursoDigitalInt recurso) {
         recursos.add(recurso);
     }
 
@@ -33,8 +34,8 @@ public class GestorBiblioteca {
         prestamos.add(prestamo);
     }
 
-    public RecursoDigital buscarRecursoPorTitulo(String titulo) {
-        for (RecursoDigital recurso : recursos) {
+    public RecursoDigitalInt buscarRecursoPorTitulo(String titulo) {
+        for (RecursoDigitalInt recurso : recursos) {
             if (recurso.getIdentificador().equalsIgnoreCase(titulo)) {
                 return recurso;
             }
@@ -50,13 +51,13 @@ public class GestorBiblioteca {
         return usuario;
     }
 
-    public List<RecursoDigital> buscarPorTitulo(String titulo) {
+    public List<RecursoDigitalInt> buscarPorTitulo(String titulo) {
         return recursos.stream()
                 .filter(r -> r.getIdentificador().toLowerCase().contains(titulo.toLowerCase()))
                 .toList();
     }
     //Devuelve lista de recursos
-    public List<RecursoDigital> getRecursos() {
+    public List<RecursoDigitalInt> getRecursos() {
         return recursos;
     }
 
@@ -64,7 +65,7 @@ public class GestorBiblioteca {
         return usuarios;
     }
 
-    public List<RecursoDigital> filtrarPorCategoria(CategoriaRecurso categoriaRecurso) {
+    public List<RecursoDigitalInt> filtrarPorCategoria(CategoriaRecurso categoriaRecurso) {
         return recursos.stream()
                 .filter(r -> r.getCategoria() == categoriaRecurso)
                 .toList();
@@ -73,4 +74,9 @@ public class GestorBiblioteca {
      public List<Prestamo> getPrestamos() {
         return prestamos;
     }
+
+    public List<Usuario> getListaUsuarios() {
+        return new ArrayList<>(usuarios.values());
+    }
+
 }
