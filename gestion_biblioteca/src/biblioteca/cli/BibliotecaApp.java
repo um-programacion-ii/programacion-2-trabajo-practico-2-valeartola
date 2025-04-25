@@ -40,13 +40,21 @@ public class BibliotecaApp {
 
     }
     public void iniciar() {
-        consola.mostrarMenu();
         crearUsuariosDemo();
         crearRecursosDemo();
-        pruebasBusquedaYCategorias();
-        pruebasPrestamosYReservas();
-        pruebasAlertasYNotificaciones();
+
+        Usuario usuario = consola.seleccionarUsuario(gestorBiblioteca.getListaUsuarios());
+
+        consola.menuPrincipal(
+                usuario,
+                gestorBiblioteca,
+                servicioPrestamos,
+                servicioAlertas,
+                new ServicioReportes(gestorBiblioteca),
+                servicioReserva
+        );
     }
+
     private void crearUsuariosDemo() {
         usuario1 = new Usuario("Valentina", "Artola", 48965782, "valeart@mail.com", "26185964826", TipoNotificacion.EMAIL, NivelUrgencia.INFO);
         usuario2 = new Usuario("Mauro", "Codina", 55888999, "mc@correo.com", "123456789", TipoNotificacion.SMS, NivelUrgencia.INFO);
@@ -69,46 +77,7 @@ public class BibliotecaApp {
         gestorBiblioteca.agregarRecurso(revista);
         gestorBiblioteca.agregarRecurso(audiolibro1);
     }
-    private void pruebasBusquedaYCategorias() {
-        consola.mostrarMenuRecurso(libro2);
-        consola.mostrarMenuRecurso(audiolibro1);
 
-        RecursoDigital encontrado = gestorBiblioteca.buscarRecursoPorTitulo("El Principito");
-        if (encontrado != null) encontrado.mostrarInformacion();
-
-        List<RecursoDigital> resultados = gestorBiblioteca.buscarPorTitulo("java");
-        resultados.forEach(RecursoDigital::mostrarInformacion);
-
-        consola.mostrarCategoriasDisponibles();
-
-        List<RecursoDigital> filtroCategoria = gestorBiblioteca.filtrarPorCategoria(CategoriaRecurso.FICCION);
-        filtroCategoria.forEach(RecursoDigital::mostrarInformacion);
-
-        consola.mostrarMenuOrdenamiento(gestorBiblioteca);
-        consola.buscarUsuarioPorId(gestorBiblioteca);
-    }
-    private void pruebasPrestamosYReservas() {
-        consola.prestarRecursos(libro3, usuario1);
-        servicioPrestamos.prestar(libro2, usuario1);
-        consola.mostrarMenuPrestamos(gestorBiblioteca, servicioPrestamos, usuario1);
-
-        Reserva reserva1 = new Reserva(usuario1, audiolibro1);
-        Reserva reserva2 = new Reserva(usuario2, libro2);
-        servicioReserva.agregarReserva(reserva1);
-        servicioReserva.agregarReserva(reserva2);
-        servicioReserva.mostrarReservas();
-
-        servicioPrestamos.devolver(libro2, usuario1);
-    }
-
-    private void pruebasAlertasYNotificaciones() {
-        consola.mostrarAlertas(gestorBiblioteca);
-        recordatorios.iniciar();
-        historialAlertas.mostrarHistorial();
-
-        ((Renovable) libro3).renovar(usuario1);
-        ((Prestable) libro3).devolver(usuario2);
-    }
 
 }
 
