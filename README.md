@@ -6,34 +6,78 @@
 Desarrollar un sistema de gestión de biblioteca digital que implemente los cinco principios SOLID, programación orientada a objetos, y conceptos avanzados de Java. El sistema deberá manejar diferentes tipos de recursos digitales, préstamos, reservas, y notificaciones en tiempo real.
 
 ## 👨‍🎓 Información del Alumno
-- **Nombre y Apellido**: [Nombre y Apellido del Alumno]
+- **Nombre y Apellido**: Valentina Artola
 
 ## 📋 Requisitos Adicionales
 
 ### Documentación del Sistema
 Como parte del trabajo práctico, deberás incluir en este README una guía de uso que explique:
 
-1. **Cómo funciona el sistema**:
-   - Descripción general de la arquitectura
-   - Explicación de los componentes principales
-   - Flujo de trabajo del sistema
+### 1. **Cómo funciona el sistema**:
+Este sistema representa una Biblioteca Digital operada desde la consola. Los usuarios registrados pueden realizar acciones como préstamo, devolución, reserva y renovación de recursos disponibles, incluyendo libros, revistas y audiolibros. La interacción se organiza a través de un menú principal que permite acceder a todas las funcionalidades de manera sencilla
 
-2. **Cómo ponerlo en funcionamiento**:
-   - Deberás incluir las instrucciones detalladas de puesta en marcha
-   - Explicar los requisitos previos necesarios
-   - Describir el proceso de compilación
-   - Detallar cómo ejecutar la aplicación
+**Componentes principales**
+- GestorBiblioteca: se encarga de la administración central del sistema, gestionando usuarios, recursos digitales y operaciones de préstamo.
+- Servicios (Préstamos, Reserva, Alertas, Reportes): encapsulan funcionalidades específicas, permitiendo mantener una lógica modular y desacoplada
+- RecursoDigital y sus subclases como Libro, Revista, etc., modelan los distintos tipos de materiales disponibles en la biblioteca.
+- Usuario: representa a un lector registrado, incluyendo su preferencia para recibir notificaciones.
+- Consola: gestiona toda la interacción con el usuario a través de un menú de navegación.
+- Main: actúa como punto de entrada del sistema, iniciando la ejecución del programa.
 
-3. **Cómo probar cada aspecto desarrollado**:
-   - Deberás proporcionar ejemplos de uso para cada funcionalidad implementada
-   - Incluir casos de prueba que demuestren el funcionamiento del sistema
-   - Describir flujos de trabajo completos que muestren la interacción entre diferentes componentes
+**Fujo de trabajo**
 
-La guía debe ser clara, concisa y permitir a cualquier usuario entender y probar el sistema. Se valorará especialmente:
-- La claridad de las instrucciones
-- La completitud de la documentación
-- La organización de la información
-- La inclusión de ejemplos prácticos
+El usuario selecciona su perfil al comenzar. Luego, navega por el menú para ejecutar distintas acciones como agregar recursos, prestar, devolver materiales o consultar alertas. Estas acciones modifican el estado interno del sistema, notifican al usuario y pueden activar alertas o gestionar reservas automáticamente si se requiere. Los reportes y estadísticas se generan de forma automática en segundo plano.
+
+
+### 2. **Cómo ponerlo en funcionamiento**:
+
+**Requisitos previos**
+
+-Java 17 o superior.
+
+-IDE (por ejemplo: IntelliJ IDEA) o terminal.
+
+-Proyecto compilado con estructura estándar de paquetes.
+
+**Copilación**
+
+Desde la termianl 
+
+```java
+git clone git@github.com:um-programacion-ii/programacion-2-trabajo-practico-2-valeartola.git
+```
+
+Asegurate que estar ubicado en la raiz del proyecto
+
+```java
+javac src/gestion_biblioteca/*.java -d out
+```
+
+Ejecución
+```java
+java -cp out gestion_biblioteca.Main
+```
+### 3. **Cómo probar cada aspecto desarrollado**:
+
+1. Gestión de Recursos
+   - Agregar libro: Opción 1 → Gestión de Recursos → Agregar Recurso → Libro
+   - Buscar recurso: Opción 1 → Buscar por título
+   - Listar recursos: Muestra los recursos agrupados por tipo
+2. Gestión de Usuarios
+   - Registrar usuario: Opción 2 → Registrar
+   - Buscar usuario: Por ID (con validación y mensaje si no se encuentra)
+3. Préstamos
+   - Realizar préstamo: Opción 3 → Realizar préstamo
+   - Devolver recurso: Opción 3 → Devolver
+   - Visualizar préstamos: Lista todos los préstamos o por usuario
+4. Reservas
+   - Al intentar prestar un recurso no disponible, se ofrece hacer una reserva.
+   - Al devolver el recurso, si hay reservas, se muestra una alerta de disponibilidad.
+5. Reportes
+   - Opción 5: permite generar: reportes
+6. Alertas 
+   - Opción 6: muestra alertas por vencimiento.
+   
 
 ### Prueba de Funcionalidades
 
